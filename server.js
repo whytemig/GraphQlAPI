@@ -1,10 +1,14 @@
 const { graphql, buildSchema } = require("graphql");
+const express = require("express");
+const { createHandler } = require("graphql-http/lib/use/express");
+const { ruruHTML } = require("ruru/server");
+const app = express();
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
     myname: String
-    age:Float
+    hello(name:String):String!
   }
 `);
 
@@ -13,16 +17,20 @@ var rootValue = {
   myname() {
     return "Miguel!";
   },
-  age() {
-    return 34.5;
-  },
+  hello: ({ name }) => `Hi there, ${name}!!`,
 };
 
-// Run the GraphQL query '{ hello }' and print out the response
-graphql({
-  schema,
-  source: "{myname, age}",
-  rootValue,
-}).then((response) => {
-  console.log(response);
-});
+app
+  .all(
+    "/graphql",
+    createHandler({
+      schema,
+      rootValue,
+    })
+  )
+  .get("/", (_req, res) => {
+    res.type("html");
+    res.end(ruruHTML({ endpoint: "/graphql" }));
+  })
+  .listen(4000);
+console.log("Running on http://localhost:4000");
