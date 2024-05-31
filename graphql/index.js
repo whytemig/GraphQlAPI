@@ -5,7 +5,6 @@ import _ from "lodash";
 const queries = `#graphql
     type Query{
         hello: String
-        user:User
     }
     `;
 
