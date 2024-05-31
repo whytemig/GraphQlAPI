@@ -3,7 +3,13 @@ type Query{
     user:User
 }
 type Mutation{
-    createUser(name:String!):User
+    createUser(user:Userfield!):User
+}
+
+"input"
+input Userfield{
+    name:String
+    age:Int
 }
 
 
@@ -11,6 +17,7 @@ type Mutation{
 type User{
         id:Int
         name:String
+        age:Int
     }`;
 
 export const userResolvers = {
@@ -20,8 +27,8 @@ export const userResolvers = {
     },
   },
   Mutation: {
-    createUser: (_, { name }) => {
-      return { name };
+    createUser: (_, { user }) => {
+      return { ...user };
     },
   },
   //   "making a resolver for the User object type"
