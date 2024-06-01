@@ -15,6 +15,7 @@ export async function run() {
       .useDb("sample_mflix")
       .collection("movies")
       .find()
+      .limit(10)
       .toArray();
     return { data };
 
