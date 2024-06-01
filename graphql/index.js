@@ -1,6 +1,9 @@
 import { createSchema, createYoga } from "graphql-yoga";
 import { typeDefs as User, userResolvers } from "./models/user.js";
 import _ from "lodash";
+import { run } from "./database/index.js";
+
+const { data } = await run();
 
 const queries = `#graphql
     type Query{
@@ -20,4 +23,7 @@ const schema = createSchema({
   resolvers: _.merge(resolvers, userResolvers),
 });
 
-export const yoga = createYoga({ schema });
+export const yoga = createYoga({
+  schema,
+  context: { data },
+});
