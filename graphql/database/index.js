@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
-const uri =
-  "mongodb+srv://miguel:miguel@cluster0.cr9rfdw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const uri = process.env.MONGO_URL;
 
 const clientOptions = {
   serverApi: { version: "1", strict: true, deprecationErrors: true },
@@ -17,6 +20,7 @@ export async function run() {
       .find()
       .limit(10)
       .toArray();
+    console.log("CONNECTED");
     return { data };
 
     return { data };

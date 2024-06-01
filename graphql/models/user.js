@@ -1,6 +1,7 @@
 export const typeDefs = `#graphql  
 type Query{
     user:User
+    movies:[Movies!]!
 }
 type Mutation{
     createUser(user:Userfield!):User
@@ -18,21 +19,29 @@ type User{
         id:Int
         name:String
         age:Int
+    }
+    
+    
+    type Movies{
+        id: String
+        plot:String
+        genres:[String]
+        poster:String
+        title:String
     }`;
 
 export const userResolvers = {
   Query: {
-    user: () => {
-      return { id: 1, name: "Miguels" };
+    movies: (_, __, { data }) => {
+      return [...data];
     },
   },
   Mutation: {
-    createUser: (_, { user }) => {
-      return { ...user };
-    },
+    createUser: (_, { user }, { data }) => {},
   },
-  //   "making a resolver for the User object type"
-  User: {
-    name: ({ name }) => name.toUpperCase(),
+  Movies: {
+    id: (obj) => {
+      return obj._id;
+    },
   },
 };
