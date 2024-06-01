@@ -9,11 +9,7 @@ const clientOptions = {
 export async function run() {
   try {
     // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
-    // const movies = await mongoose.connection
-    //   .useDb("sample_mflix")
-    //   .db.collection("movies")
-    //   .find()
-    //   .toArray();
+
     await mongoose.connect(uri, clientOptions);
     const data = await mongoose.connection
       .useDb("sample_mflix")
