@@ -22,8 +22,6 @@ export async function run() {
       .toArray();
     console.log("CONNECTED");
     return { data };
-
-    return { data };
   } catch (err) {
     console.log("Mongoose connection Error!!", err);
     return {};
